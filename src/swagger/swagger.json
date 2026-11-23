@@ -6,7 +6,29 @@
 		"parameters": {},
 		"requestBodies": {},
 		"responses": {},
-		"schemas": {},
+		"schemas": {
+			"EmpresaResponse": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"nome": {
+						"type": "string"
+					},
+					"cnpj": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"nome",
+					"cnpj"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
 		"securitySchemes": {}
 	},
 	"info": {
@@ -39,6 +61,56 @@
 				],
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/empresa/{empresaId}": {
+			"get": {
+				"operationId": "BuscarEmpresaId",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EmpresaResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Empresa"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "empresaId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		}
 	},
