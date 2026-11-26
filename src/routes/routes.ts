@@ -7,6 +7,8 @@ import {  fetchMiddlewares, ExpressTemplateService } from '@tsoa/runtime';
 import { TesteControler } from './../controller/TesteController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { EmpresaController } from './../controller/EmpresaController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { ContaContabilController } from './../controller/ContaContabilController';
 import type { Request as ExRequest, Response as ExResponse, RequestHandler, Router } from 'express';
 
 
@@ -29,6 +31,34 @@ const models: TsoaRoute.Models = {
             "id": {"dataType":"double","required":true},
             "nome": {"dataType":"string","required":true},
             "cnpj": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "TipoConta": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["ATIVO"]},{"dataType":"enum","enums":["PASSIVO"]},{"dataType":"enum","enums":["PATRIMONIO_LIQUIDO"]},{"dataType":"enum","enums":["RECEITA"]},{"dataType":"enum","enums":["DESPESA"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ContaContabilCreateRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "codigo": {"dataType":"string","required":true},
+            "nome": {"dataType":"string","required":true},
+            "tipo": {"ref":"TipoConta","required":true},
+            "empresaId": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ContaContabilResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double","required":true},
+            "codigo": {"dataType":"string","required":true},
+            "nome": {"dataType":"string","required":true},
+            "tipo": {"ref":"TipoConta","required":true},
+            "empresaId": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
     },
@@ -132,6 +162,70 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'buscarEmpresaId',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsContaContabilController_criarConta: Record<string, TsoaRoute.ParameterSchema> = {
+                data: {"in":"body","name":"data","required":true,"ref":"ContaContabilCreateRequest"},
+                success: {"in":"res","name":"201","required":true,"ref":"ContaContabilResponse"},
+                fail: {"in":"res","name":"400","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"message":{"dataType":"string","required":true}}},
+        };
+        app.post('/conta-contabil',
+            ...(fetchMiddlewares<RequestHandler>(ContaContabilController)),
+            ...(fetchMiddlewares<RequestHandler>(ContaContabilController.prototype.criarConta)),
+
+            async function ContaContabilController_criarConta(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsContaContabilController_criarConta, request, response });
+
+                const controller = new ContaContabilController();
+
+              await templateService.apiHandler({
+                methodName: 'criarConta',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsContaContabilController_buscarContaId: Record<string, TsoaRoute.ParameterSchema> = {
+                contaId: {"in":"path","name":"contaId","required":true,"dataType":"double"},
+                success: {"in":"res","name":"200","required":true,"ref":"ContaContabilResponse"},
+                fail: {"in":"res","name":"404","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"message":{"dataType":"string","required":true}}},
+        };
+        app.get('/conta-contabil/:contaId',
+            ...(fetchMiddlewares<RequestHandler>(ContaContabilController)),
+            ...(fetchMiddlewares<RequestHandler>(ContaContabilController.prototype.buscarContaId)),
+
+            async function ContaContabilController_buscarContaId(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsContaContabilController_buscarContaId, request, response });
+
+                const controller = new ContaContabilController();
+
+              await templateService.apiHandler({
+                methodName: 'buscarContaId',
                 controller,
                 response,
                 next,

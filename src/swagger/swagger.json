@@ -43,6 +43,71 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"TipoConta": {
+				"type": "string",
+				"enum": [
+					"ATIVO",
+					"PASSIVO",
+					"PATRIMONIO_LIQUIDO",
+					"RECEITA",
+					"DESPESA"
+				]
+			},
+			"ContaContabilCreateRequest": {
+				"properties": {
+					"codigo": {
+						"type": "string"
+					},
+					"nome": {
+						"type": "string"
+					},
+					"tipo": {
+						"$ref": "#/components/schemas/TipoConta"
+					},
+					"empresaId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"codigo",
+					"nome",
+					"tipo",
+					"empresaId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ContaContabilResponse": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"codigo": {
+						"type": "string"
+					},
+					"nome": {
+						"type": "string"
+					},
+					"tipo": {
+						"$ref": "#/components/schemas/TipoConta"
+					},
+					"empresaId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id",
+					"codigo",
+					"nome",
+					"tipo",
+					"empresaId"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -170,6 +235,114 @@
 					{
 						"in": "path",
 						"name": "empresaId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/conta-contabil": {
+			"post": {
+				"operationId": "CriarConta",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"201": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ContaContabilResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"ContaContabil"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ContaContabilCreateRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/conta-contabil/{contaId}": {
+			"get": {
+				"operationId": "BuscarContaId",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ContaContabilResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"ContaContabil"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "contaId",
 						"required": true,
 						"schema": {
 							"format": "double",

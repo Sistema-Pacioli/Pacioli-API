@@ -1,5 +1,5 @@
 import { Body, Get, Path, Post, Res, Response, Route, Tags, TsoaResponse } from "tsoa";
-import { EmrpesaService } from "../service/EmpresaService";
+import { EmpresaService } from "../service/EmpresaService";
 import { EmpresaResponse } from "../model/dto/EmpresaResponse";
 import { EmpresaCreateRequest } from "../model/dto/EmpresaCreateRequest";
 
@@ -7,7 +7,7 @@ import { EmpresaCreateRequest } from "../model/dto/EmpresaCreateRequest";
 @Tags("Empresa")
 
 export class EmpresaController {
-    private empresaService = new EmrpesaService();
+    private empresaService = new EmpresaService();
 
     @Post("/")
     async criarEmpresa(
