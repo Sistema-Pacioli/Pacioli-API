@@ -1,4 +1,5 @@
 import { sql } from "../db";
+import { EmpresaCreateRequest } from "../model/dto/EmpresaCreateRequest";
 import { Empresa } from "../model/entity/Empresa";
 
 export class EmpresaRepository {
@@ -29,6 +30,16 @@ export class EmpresaRepository {
         await sql`
             alter table empresa enable row level security;
         `
+    }
+
+    async insertEmpresa(data: EmpresaCreateRequest): Promise<Empresa> {
+        await this.ready;
+        const empresa = await sql<Empresa[]>`
+            INSERT INTO public.empresa (nome, cnpj)
+            VALUES (${data.nome}, ${data.cnpj})
+            returning *
+        `;
+        return new Empresa(empresa[0]?.id, empresa[0]?.nome, empresa[0]?.cnpj);
     }
 
     async findById(empresaId: number): Promise<Empresa> {

@@ -7,6 +7,22 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"EmpresaCreateRequest": {
+				"properties": {
+					"nome": {
+						"type": "string"
+					},
+					"cnpj": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"nome",
+					"cnpj"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"EmpresaResponse": {
 				"properties": {
 					"id": {
@@ -61,6 +77,56 @@
 				],
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/empresa": {
+			"post": {
+				"operationId": "CriarEmpresa",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EmpresaResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Empresa"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/EmpresaCreateRequest"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/empresa/{empresaId}": {

@@ -14,6 +14,15 @@ import type { Request as ExRequest, Response as ExResponse, RequestHandler, Rout
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+    "EmpresaCreateRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "nome": {"dataType":"string","required":true},
+            "cnpj": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "EmpresaResponse": {
         "dataType": "refObject",
         "properties": {
@@ -59,6 +68,38 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'teste',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsEmpresaController_criarEmpresa: Record<string, TsoaRoute.ParameterSchema> = {
+                data: {"in":"body","name":"data","required":true,"ref":"EmpresaCreateRequest"},
+                success: {"in":"res","name":"200","required":true,"ref":"EmpresaResponse"},
+                fail: {"in":"res","name":"404","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"message":{"dataType":"string","required":true}}},
+        };
+        app.post('/empresa',
+            ...(fetchMiddlewares<RequestHandler>(EmpresaController)),
+            ...(fetchMiddlewares<RequestHandler>(EmpresaController.prototype.criarEmpresa)),
+
+            async function EmpresaController_criarEmpresa(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsEmpresaController_criarEmpresa, request, response });
+
+                const controller = new EmpresaController();
+
+              await templateService.apiHandler({
+                methodName: 'criarEmpresa',
                 controller,
                 response,
                 next,
